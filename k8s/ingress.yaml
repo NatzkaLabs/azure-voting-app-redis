@@ -51,7 +51,7 @@ metadata:
 spec:
   scaleTargetRef:
     name: azure-vote-back
-  pollingInterval: 15
+  pollingInterval: 5
   cooldownPeriod:  30
   minReplicaCount: 1
   maxReplicaCount: 10
@@ -75,7 +75,7 @@ spec:
   - type: cpu
     metadata:
       type: AverageValue
-      value: "300m"
+      value: "200m"
   # - type: memory
   #   metadata:
   #     type: AverageValue
