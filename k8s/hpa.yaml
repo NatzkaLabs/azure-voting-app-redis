@@ -1,0 +1,39 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: prometheus-azure-vote-back
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: azure-vote-back
+  pollingInterval: 5
+  cooldownPeriod:  30
+  minReplicaCount: 2
+  maxReplicaCount: 6
+  advanced:
+    # restoreToOriginalReplicaCount: true
+    horizontalPodAutoscalerConfig:
+      behavior:
+        scaleDown:
+          stabilizationWindowSeconds: 30
+          # policies:
+          # - type: Percent
+          #   value: 100
+          #   periodSeconds: 15
+  triggers:
+  - type: prometheus
+    metadata:
+      serverAddress: http://prometheus-stack-kube-prom-prometheus.monitoring.svc.cluster.local:9090
+      metricName: number_of_requests
+      threshold: '2'
+      query: sum(rate(request_total{app="azure-vote-back"}[1m]))
+      # query: sum(rate(nginx_ingress_controller_requests{ingress="azure-vote-front", status="200"}[5m]))*100
+  - type: cpu
+    metadata:
+      type: AverageValue
+      value: "500m"
+  # - type: memory
+  #   metadata:
+  #     type: AverageValue
+  #     value: "75"
+  

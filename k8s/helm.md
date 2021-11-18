@@ -19,7 +19,11 @@ helm upgrade --install cert-manager jetstack/cert-manager --namespace ingress --
 
 ## KEDA
 helm repo add kedacore https://kedacore.github.io/charts
-helm update --install keda kedacore/keda --namespace ingress-nginx
+helm update --install keda kedacore/keda --namespace ingress
+
+## LINKERD and LINKERD-VIZ
+linkerd install | kubectl apply -f -
+helm upgrade --install --namespace linkerd-viz --create-namespace linkerd-viz linkerd/linkerd-viz -f k8s/linkerd-viz.yaml
 
 <!-- 
 ## kubed 
