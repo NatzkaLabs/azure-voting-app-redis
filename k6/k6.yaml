@@ -1,0 +1,27 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: k6-predictive-scaling
+spec:
+  schedule: "*/30 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: k6
+            image: natzkadevcontainerregistry.azurecr.io/k6:prom
+            imagePullPolicy: Always
+            command: ["/usr/bin/k6"]
+            args: ["run", "/mnt/load-test.js", "-o", "output-prometheus-remote"]
+            env:
+              - name: K6_PROMETHEUS_REMOTE_URL
+                value: "https://predscaling01-prom.natzkalabs.com/api/v1/write"
+            volumeMounts:
+            - mountPath: /mnt
+              name: k6-load-test-js
+          volumes:
+          - name: k6-load-test-js
+            configMap:
+              name: k6-load-test-js
+          restartPolicy: OnFailure

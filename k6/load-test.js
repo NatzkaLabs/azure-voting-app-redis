@@ -2,7 +2,7 @@ import http from 'k6/http';
 import { sleep } from 'k6';
 
 export const options = {
-    vus: 1000,
+    vus: 100,
     duration: '10m',
 };
 
@@ -20,7 +20,7 @@ function randomExponential(rate, randomUniform) {
 }
 
 export default function () {
-    var url = 'https://predscaling01.natzkalabs.com/loads/matrixinverse?msize=10000';     
+    var url = 'https://predscaling01.natzkalabs.com/loads/matrixinverse?msize=1000';     
     http.get(url);
-    sleep(randomExponential(1))
+    sleep(randomExponential(10))
 }

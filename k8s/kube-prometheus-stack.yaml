@@ -38,6 +38,8 @@ prometheus:
   prometheusSpec:
     image:
       tag: v2.31.1
+    enableFeatures:
+      - remote-write-receiver
     storageSpec:
       volumeClaimTemplate:
        spec:
