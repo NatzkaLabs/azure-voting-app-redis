@@ -1,8 +1,8 @@
 name: azure-vote-front
 on:
   push:
-    branches:
-      - loadtest
+    # branches:
+    #   - loadtest
 
 defaults:
   run:
