@@ -2,25 +2,18 @@ import http from 'k6/http';
 import { sleep } from 'k6';
 
 export const options = {
-    vus: 100,
-    duration: '10m',
+    scenarios: {
+        open_model: {
+            executor: 'constant-arrival-rate',
+            rate: 10,
+            timeUnit: '1s',
+            duration: '10m',
+            preAllocatedVUs: 100,
+        },
+    },
 };
-
-function randomExponential(rate, randomUniform) {
-    // http://en.wikipedia.org/wiki/Exponential_distribution#Generating_exponential_variates
-    rate = rate || 1;
-  
-    // Allow to pass a random uniform value or function
-    // Default to Math.random()
-    var U = randomUniform;
-    if (typeof randomUniform === 'function') U = randomUniform();
-    if (!U) U = Math.random();
-  
-    return -Math.log(U)/rate;
-}
 
 export default function () {
     var url = 'https://predscaling01.natzkalabs.com/loads/matrixinverse?msize=1000';     
     http.get(url);
-    sleep(randomExponential(10))
 }
