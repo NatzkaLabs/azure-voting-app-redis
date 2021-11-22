@@ -1,8 +1,8 @@
 name: azure-vote-front
 on:
   push:
-    # branches:
-    #   - loadtest
+    branches:
+      - loadtest
 
 defaults:
   run:
@@ -13,7 +13,7 @@ env:
   natzkaacr-service-principal-id: "d7820fe3-a20e-4d77-a3a1-76acb2517254"
 
 jobs:
-  deploy-loadtest-js:
+  deploy-loadtest:
     runs-on: ubuntu-latest
     steps:
 
@@ -25,13 +25,13 @@ jobs:
          kubeconfig: ${{ secrets.KUBECONFIG_K6_ITEMIS_INT }}
 
     - name: Deploy apps
-      # if: ${{ github.ref == 'refs/heads/loadtest' }}
+      if: ${{ github.ref == 'refs/heads/loadtest' }}
       run: |
         kubectl --namespace default delete configmap k6-load-test-js
         kubectl --namespace default create configmap k6-load-test-js --from-file k6/load-test.js --output yaml
         kubectl --namespace default apply -f k6/k6.yaml
 
-  deploy-k6-config:
+  deploy-k6-hpa:
     runs-on: ubuntu-latest
     steps:
 
@@ -43,6 +43,6 @@ jobs:
         kubeconfig: ${{ secrets.KUBECONFIG }}
 
     - name: Deploy apps
-      # if: ${{ github.ref == 'refs/heads/loadtest' }}
+      if: ${{ github.ref == 'refs/heads/loadtest' }}
       run: |
         kubectl apply -f k8s/hpa.yaml
