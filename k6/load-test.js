@@ -5,7 +5,7 @@ export const options = {
     scenarios: {
         open_model: {
             executor: 'constant-arrival-rate',
-            rate: 10,
+            rate: 1,
             timeUnit: '1s',
             duration: '10m',
             preAllocatedVUs: 100,
@@ -13,7 +13,7 @@ export const options = {
 
         open_model_ramp: {
             executor: 'ramping-arrival-rate',  
-            startTime: '20m',    
+            startTime: '15m',    
             startRate: 0,      
             timeUnit: '1s',      
             preAllocatedVUs: 100,      
