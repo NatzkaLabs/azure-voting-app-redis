@@ -10,6 +10,19 @@ export const options = {
             duration: '10m',
             preAllocatedVUs: 100,
         },
+
+        open_model_ramp: {
+            executor: 'ramping-arrival-rate',  
+            startTime: '20m',    
+            startRate: 0,      
+            timeUnit: '1s',      
+            preAllocatedVUs: 100,      
+            maxVUs: 100,      
+            stages: [      
+              { target: 10, duration: '10m' },         
+            ],
+      
+          },
     },
 };
 
