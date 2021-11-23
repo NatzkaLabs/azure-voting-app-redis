@@ -7,15 +7,15 @@ spec:
   scaleTargetRef:
     name: azure-vote-back
   pollingInterval: 5
-  cooldownPeriod:  30
+  # cooldownPeriod:  30
   minReplicaCount: 2
   maxReplicaCount: 6
   advanced:
     # restoreToOriginalReplicaCount: true
-    horizontalPodAutoscalerConfig:
-      behavior:
-        scaleDown:
-          stabilizationWindowSeconds: 30
+    # horizontalPodAutoscalerConfig:
+    #   behavior:
+    #     scaleDown:
+          # stabilizationWindowSeconds: 600
           # policies:
           # - type: Percent
           #   value: 100
