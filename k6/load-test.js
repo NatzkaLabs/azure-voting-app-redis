@@ -3,15 +3,24 @@ import { sleep } from 'k6';
 
 export const options = {
     scenarios: {
-        open_model: {
+        constant_rate_low: {
             executor: 'constant-arrival-rate',
-            rate: 1,
+            rate: 0.1,
             timeUnit: '1s',
-            duration: '10m',
+            duration: '5m',
             preAllocatedVUs: 100,
         },
 
-        open_model_ramp: {
+        constant_rate_high: {
+            executor: 'constant-arrival-rate',
+            startTime: '6m',
+            rate: 1,
+            timeUnit: '1s',
+            duration: '5m',
+            preAllocatedVUs: 100,
+        },
+
+        ramping_rate: {
             executor: 'ramping-arrival-rate',  
             startTime: '15m',    
             startRate: 0,      
