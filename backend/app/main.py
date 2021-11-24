@@ -4,8 +4,8 @@ import numpy as np
 app = FastAPI()
 
 def matrix_inverse_trace(msize: int):
-    m = np.random.random((msize, msize))
-    inversemat = np.linalg.inv(m)
+    m = np.random.random((msize, msize), dtype=np.float32)
+    inversemat = np.linalg.pinv(m)
     trace_of_mat = np.trace(inversemat)
     return trace_of_mat
 
