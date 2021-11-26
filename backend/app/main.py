@@ -4,7 +4,7 @@ import numpy as np
 app = FastAPI()
 
 def matrix_inverse_trace(msize: int):
-    m = np.random.random((msize, msize), dtype=np.float32)
+    m = np.random.random((msize, msize))
     inversemat = np.linalg.pinv(m)
     trace_of_mat = np.trace(inversemat)
     return trace_of_mat
